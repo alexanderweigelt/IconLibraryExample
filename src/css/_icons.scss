@@ -1,0 +1,24 @@
+/* ==========================================================================
+   Icon styles
+   ========================================================================== */
+
+// Create a map of icon
+$icons: (
+  home: "../icons/home.svg",
+  user: "../icons/user.svg",
+);
+
+@each $name, $svg-url in $icons {
+  @include icon($name);
+}
+
+.icon {
+  width: 512px; // Adjust as needed
+  height: 448px; // Adjust as needed
+  fill: currentcolor; // Icons will inherit text color
+  display: inline-block;
+  stroke-width: 0;
+  stroke: currentcolor;
+  background-size: contain;
+  background-repeat: no-repeat;
+}

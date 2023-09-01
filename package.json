@@ -1,0 +1,36 @@
+{
+    "name": "html5-boilerplate",
+    "private": true,
+    "version": "0.0.1",
+    "description": "HTML5 Boilerplate",
+    "license": "MIT",
+    "author": "",
+    "main": "src/index.js",
+    "scripts": {
+        "build-dev": "webpack --mode development",
+        "build-prod": "webpack --mode production",
+        "lint": "eslint --fix . --ext .ts",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^6.5.0",
+        "@typescript-eslint/parser": "^6.5.0",
+        "autoprefixer": "^10.4.15",
+        "css-loader": "^6.8.1",
+        "eslint": "^8.48.0",
+        "eslint-webpack-plugin": "^4.0.1",
+        "postcss": "^8.4.29",
+        "postcss-loader": "^7.3.3",
+        "sass": "^1.66.1",
+        "sass-loader": "^13.3.2",
+        "style-loader": "^3.3.1",
+        "stylelint": "^15.10.3",
+        "stylelint-config-standard": "^34.0.0",
+        "stylelint-config-standard-scss": "^10.0.0",
+        "stylelint-webpack-plugin": "^4.1.1",
+        "ts-loader": "^9.2.6",
+        "typescript": "^5.2.2",
+        "webpack": "^5.88.2",
+        "webpack-cli": "^5.1.4"
+    }
+}
