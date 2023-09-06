@@ -1,4 +1,12 @@
-# Icon library
+# Icon library example
+
+## The Task
+
+**Investigate which of the possible technologies should be used to develop a custom icon library to replace an icon-font.**
+
+Creating an icon library using SVG icons can be achieved in various ways, each with its own advantages and use cases. Here are three approaches:
+
+## Define "Icon Library"
 
 An icon library is a collection of reusable icons that are commonly used in web development and design. These icons are typically created as vector graphics in formats like SVG (Scalable Vector Graphics) and are organized and stored for easy access and use in web projects. Icon libraries serve several important purposes in web development:
 
@@ -30,12 +38,6 @@ There are various ways to incorporate icon libraries into web development:
 
 In summary, an icon library is a valuable resource for web development, simplifying the process of including consistent, scalable, and customizable icons in web projects while optimizing performance and accessibility.
 
-## Investigation
-
-**Investigate which of the possible technologies should be used to develop a custom icon library to replace an icon-font.**
-
-Creating an icon library using SVG icons can be achieved in various ways, each with its own advantages and use cases. Here are three approaches:
-
 ## Prepare your project
 
 1. **Prepare Your SVGs:**
@@ -45,7 +47,9 @@ Creating an icon library using SVG icons can be achieved in various ways, each w
    Create a directory structure for your project:
 
    ```
-   project/
+   src/
+   ├── components/
+   │   ├── IconComponent.js
    ├── icons/
    │   ├── home.svg
    │   ├── user.svg
@@ -227,23 +231,18 @@ npm install
 To create a production build:
 
 ```sh
-npm run build-prod
+npm run build
 ```
 
 To create a development build:
 
 ```sh
-npm run build-dev
+npm run dev
 ```
 
-To lint your code
-
-```sh
-npm run lint
-```
 
 ## Running
 
 ```sh
-node dist/assets/bundle.js
+npm run preview
 ```

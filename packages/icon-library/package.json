@@ -1,0 +1,25 @@
+{
+    "name": "icon-library",
+    "description": "",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "build": "tsc && sass src/styles:dist && node build/compile.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "directories": {
+        "dist": "dist",
+        "test": "__tests__"
+    },
+    "files": [
+        "dist"
+    ],
+    "devDependencies": {
+        "@types/node": "^20.5.9",
+        "sass": "^1.66.1",
+        "typescript": "^5.2.2"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
+}
