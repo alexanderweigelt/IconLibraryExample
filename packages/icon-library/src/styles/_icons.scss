@@ -4,8 +4,8 @@
 
 // Create a map of icon
 $icons: (
-  home: "icons.svg#home",
-  user: "icons.svg#user",
+  home: "home.svg",
+  user: "user.svg",
 );
 
 @each $name, $svg-url in $icons {

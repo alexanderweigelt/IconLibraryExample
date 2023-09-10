@@ -5,11 +5,11 @@
   Icon styles
   ========================================================================== */
 .icon-home {
-  background-image: url("icons.svg#home");
+  background-image: url("home.svg");
 }
 
 .icon-user {
-  background-image: url("icons.svg#user");
+  background-image: url("user.svg");
 }
 
 .icon {

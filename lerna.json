@@ -1,9 +1,10 @@
 {
-  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
-  "version": "1.0.3",
-  "command": {
-    "publish": {
-      "registry": "https://npm.pkg.github.com"
-    }
-  }
+    "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+    "version": "1.0.3",
+    "command": {
+        "publish": {
+            "registry": "https://npm.pkg.github.com"
+        }
+    },
+    "tagVersionPrefix": ""
 }
