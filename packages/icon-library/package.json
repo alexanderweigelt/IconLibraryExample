@@ -2,6 +2,7 @@
     "name": "@alexanderweigelt/icon-library",
     "description": "",
     "version": "1.0.0",
+    "license": "MIT",
     "main": "dist/IconComponent.js",
     "types": "dist/IconComponent.d.ts",
     "style": "dist/main.css",

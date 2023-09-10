@@ -13,6 +13,6 @@
     "devDependencies": {
         "typescript": "^5.0.2",
         "vite": "^4.4.5",
-        "@alexanderweigelt/icon-library": "^1.0.0"
+        "@alexanderweigelt/icon-library": "*"
     }
 }
