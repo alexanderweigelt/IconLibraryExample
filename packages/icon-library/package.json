@@ -1,6 +1,7 @@
 {
     "name": "@alexanderweigelt/icon-library",
-    "description": "",
+    "description": "TODO: description",
+    "author": "Alexander Weigelt <webdesign@alexander-weigelt.de>",
     "version": "1.0.1",
     "license": "MIT",
     "main": "dist/IconComponent.js",
@@ -19,6 +20,20 @@
         "typescript": "^5.2.2"
     },
     "publishConfig": {
-        "access": "public"
-    }
+        "access": "public",
+        "@alexanderweigelt:registry": "https://npm.pkg.github.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/alexanderweigelt/IconLibraryExample.git"
+    },
+    "keywords": [
+        "icons",
+        "library",
+        "example"
+    ],
+    "bugs": {
+        "url": "https://github.com/alexanderweigelt/IconLibraryExample/issues"
+    },
+    "homepage": "https://github.com/alexanderweigelt/IconLibraryExample#readme"
 }
