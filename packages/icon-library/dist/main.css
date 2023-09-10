@@ -1,0 +1,26 @@
+/* ==========================================================================
+   Mixins
+   ========================================================================== */
+/* ==========================================================================
+  Icon styles
+  ========================================================================== */
+.icon-home {
+  background-image: url("icons.svg#home");
+}
+
+.icon-user {
+  background-image: url("icons.svg#user");
+}
+
+.icon {
+  width: 512px;
+  height: 448px;
+  fill: currentcolor;
+  display: inline-block;
+  stroke-width: 0;
+  stroke: currentcolor;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/*# sourceMappingURL=main.css.map */

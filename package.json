@@ -13,6 +13,7 @@
         "dev": "lerna run dev",
         "build": "lerna run build --stream",
         "preview": "lerna run preview",
+        "publish": "lerna publish --no-private",
         "test": "lerna run test"
     },
     "workspaces": [
@@ -22,5 +23,6 @@
     "dependencies": {},
     "devDependencies": {
         "lerna": "^7.1.5"
-    }
+    },
+    "packageManager": "npm@9.6.7"
 }
