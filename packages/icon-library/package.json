@@ -2,6 +2,7 @@
     "name": "@alexanderweigelt/icon-library",
     "description": "TODO: description",
     "author": "Alexander Weigelt <webdesign@alexander-weigelt.de>",
+    "homepage": "https://alexander-weigelt.de",
     "version": "1.0.4",
     "license": "MIT",
     "main": "dist/IconComponent.js",
@@ -34,6 +35,5 @@
     ],
     "bugs": {
         "url": "https://github.com/alexanderweigelt/IconLibraryExample/issues"
-    },
-    "homepage": "https://github.com/alexanderweigelt/IconLibraryExample#readme"
+    }
 }
