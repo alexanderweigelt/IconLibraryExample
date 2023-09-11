@@ -3,7 +3,7 @@
     "description": "TODO: description",
     "author": "Alexander Weigelt <webdesign@alexander-weigelt.de>",
     "homepage": "https://alexander-weigelt.de",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "license": "MIT",
     "main": "dist/IconComponent.js",
     "types": "dist/IconComponent.d.ts",
