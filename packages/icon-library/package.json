@@ -12,26 +12,24 @@
         "dist"
     ],
     "scripts": {
-        "build": "tsc && sass src/styles:dist && node build/compile.js",
+        "build": "node build/compile.js && tsc -p config/tsconfig.json",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "devDependencies": {
-        "@types/node": "^20.5.9",
+        "@types/node": "^20.8.8",
         "sass": "^1.66.1",
+        "svgo": "^3.0.2",
         "typescript": "^5.2.2"
     },
     "publishConfig": {
         "access": "public",
         "@alexanderweigelt:registry": "https://npm.pkg.github.com"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/alexanderweigelt/IconLibraryExample.git"
-    },
     "keywords": [
         "icons",
         "library",
-        "example"
+        "example",
+        "svg"
     ],
     "bugs": {
         "url": "https://github.com/alexanderweigelt/IconLibraryExample/issues"

@@ -1,4 +1,5 @@
 import './style.css'
+import '@alexanderweigelt/icon-library/dist/styles/main.css'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
@@ -6,5 +7,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <p class="read-the-docs">
       An icon library example coming soon.
     </p>
+    <i class="icon icon-home"></i>
+    <i class="icon icon-user"></i>
   </div>
 `

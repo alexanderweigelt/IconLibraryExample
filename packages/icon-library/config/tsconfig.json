@@ -12,13 +12,13 @@
         "lib": [
             "es6"
         ],
-        "outDir": "dist"
+        "outDir": "../dist"
     },
     "exclude": [
         "node_modules",
         "**/*.spec.ts"
     ],
     "include": [
-        "src"
+      "../src"
     ]
 }

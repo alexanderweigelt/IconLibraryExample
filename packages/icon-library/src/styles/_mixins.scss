@@ -5,8 +5,8 @@
    ========================================================================== */
 
 @mixin icon($name) {
-  $svg-url: map.get($icons, $name);
+  $svg-data: map.get($icons, $name);
   .icon-#{$name} {
-    background-image: url('#{$svg-url}');
+    background-image: url('data:image/svg+xml;utf8,#{$svg-data}');
   }
 }
