@@ -1,2 +1,4 @@
 @import "mixins";
 @import "icons";
+
+@include debug-map($icons-map);
