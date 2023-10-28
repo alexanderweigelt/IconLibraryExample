@@ -3,10 +3,14 @@ const {join, resolve, basename} = require('node:path');
 const {SassString, SassMap, compileAsync} = require('sass');
 const {optimize} = require('svgo');
 const {OrderedMap} = require('immutable');
+const {JSDOM} = require("jsdom");
 const svgoConfig = require('../config/svgo.config');
 const sassConfig = require('../config/sass.config');
 
-class IconCompiler {
+/**
+ * Class to compile icon library
+ */
+class IconLibraryCompiler {
     constructor() {
         this.rootDir = join(__dirname, '..');
         this.paths = {
@@ -18,11 +22,21 @@ class IconCompiler {
                 source: 'src/styles/main.scss',
                 destination: 'dist/styles/main.css',
             },
+            sprite: {
+                file: 'icons.sprite.svg',
+                destination: 'dist/icons',
+            }
         };
     }
 
+    /**
+     * Clean or create destination directories
+     * @param directory
+     * @returns {Promise<Awaited<void>[]|string>}
+     */
     async emptyDirectory(directory) {
         let items = [];
+
         try {
             await readdir(directory, (err, files) => {
                 if (err) throw Error(err.message);
@@ -33,18 +47,23 @@ class IconCompiler {
                 recursive: true,
             });
         }
+
         return Promise.all(items.map((item) => rm(join(directory, item), {recursive: true})));
     }
 
-    async getSvgsData(path) {
+    /**
+     * Returns the SVG data from source directory
+     * @returns {Promise<Awaited<{optimizedSvg: string, iconName: *, title: string, iconFileName: *, key: *}>[]>}
+     */
+    async getSvgsData() {
+        const path = join(this.rootDir, this.paths.svg.source);
         const svgFiles = (await readdir(path)).filter((fileName) => {
             return !fileName.startsWith('.') && fileName.endsWith('.svg');
         });
 
         const svgData = await Promise.all(
             svgFiles.map(async (fileName) => {
-                const dotSplit = fileName.split('.');
-                if (dotSplit.length > 2) {
+                if (fileName.split('.').length > 2) {
                     throw new Error(`SVG filename "${fileName}" cannot contain more than one period`);
                 }
                 const iconName = basename(fileName, '.svg');
@@ -76,22 +95,36 @@ class IconCompiler {
         });
     }
 
-    async createSvgIconFiles(svgData, destination) {
+    /**
+     * Builds and stores the optimized SVG files
+     * @param svgData
+     * @returns {Promise<Awaited<unknown>[]>}
+     */
+    async createSvgIconFiles(svgData) {
+        const dist = join(this.rootDir, this.paths.svg.destination);
+
         return await Promise.all(
             svgData.map(async (svg) => {
                 const {optimizedSvg, iconFileName} = svg;
-                return await writeFile(resolve(destination, iconFileName), optimizedSvg);
+                return await writeFile(resolve(dist, iconFileName), optimizedSvg);
             })
         );
     }
 
-    async createSassStyles(sassSource, sassDestination, svgData) {
+    /**
+     * A SASS compiler
+     * @param svgData
+     * @returns {Promise<void>}
+     */
+    async createSassStyles(svgData) {
+        const src = join(this.rootDir, this.paths.sass.source);
+        const dist = join(this.rootDir, this.paths.sass.destination);
         const iconMap = OrderedMap(svgData.map((svg) => [svg.key, svg.optimizedSvg])).mapEntries(
             ([key, value]) => [new SassString(key), new SassString(value, {quotes: true})]
         );
 
         const result = (
-            await compileAsync(sassSource, {
+            await compileAsync(src, {
                 ...sassConfig,
                 functions: {
                     'getIconsMap()': () => {
@@ -101,20 +134,51 @@ class IconCompiler {
             })
         ).css;
 
-        return await writeFile(sassDestination, result);
+        return await writeFile(dist, result);
     }
 
+    /**
+     * Combines all SVG files into one using <symbol> elements
+     * @param svgData
+     * @returns {Promise<void>}
+     */
+    async createSvgSprite(svgData) {
+        const dist = join(this.rootDir, this.paths.sprite.destination, this.paths.sprite.file);
+        const svgTemplate = "<svg style='display: none'></svg>";
+        const dom = new JSDOM(svgTemplate, {contentType: 'image/svg+xml'});
+        const svg = dom.window.document.querySelector("svg");
+
+        svgData.map((data) => {
+            const symbol = dom.window.document.createElement('symbol');
+            const title = dom.window.document.createElement('title');
+            const element = new JSDOM(data.optimizedSvg, {contentType: 'text/xml'}).window.document.querySelector("svg");
+            const paths = element.children;
+
+            symbol.setAttribute('viewBox', element.getAttribute('viewBox'));
+            symbol.setAttribute('id', data.key);
+            title.append(data.title);
+            symbol.append(title);
+            for (let path of paths) {
+                symbol.append(path);
+            }
+            svg.append(symbol);
+        })
+
+        return await writeFile(dist, dom.serialize());
+    }
+
+    /**
+     * The main compile method
+     * @returns {Promise<void>}
+     */
     async compileIcons() {
         try {
             await this.emptyDirectory(join(this.rootDir, this.paths.svg.destination));
             await this.emptyDirectory(join(this.rootDir, this.paths.sass.destination.substring(0, this.paths.sass.destination.lastIndexOf('/'))));
-            const svgData = await this.getSvgsData(join(this.rootDir, this.paths.svg.source));
-            await this.createSvgIconFiles(svgData, join(this.rootDir, this.paths.svg.destination));
-            await this.createSassStyles(
-                join(this.rootDir, this.paths.sass.source),
-                join(this.rootDir, this.paths.sass.destination),
-                svgData
-            );
+            const svgData = await this.getSvgsData();
+            await this.createSvgIconFiles(svgData);
+            await this.createSassStyles(svgData);
+            await this.createSvgSprite(svgData);
         } catch (error) {
             console.error(error);
             process.exit(1);
@@ -122,5 +186,5 @@ class IconCompiler {
     }
 }
 
-const iconCompiler = new IconCompiler();
+const iconCompiler = new IconLibraryCompiler();
 iconCompiler.compileIcons().then(() => console.log("Successful compiled!"));

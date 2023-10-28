@@ -11,8 +11,9 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "devDependencies": {
+        "@alexanderweigelt/icon-library": "*",
         "typescript": "^5.0.2",
         "vite": "^4.4.5",
-        "@alexanderweigelt/icon-library": "*"
+        "vite-svg-loader": "^4.0.0"
     }
 }
