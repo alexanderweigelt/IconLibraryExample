@@ -14,7 +14,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <i class="icon icon-user"></i>
     </div>
     <div class="card">
-        <p>Get your icons from inline SVG with and &lt;use&gt; Element.</p>
+        <p>Get your icons from inline SVG with a &lt;use&gt; element.</p>
         <svg class="icon">
             <use xlink:href="#home"></use>
         </svg>
