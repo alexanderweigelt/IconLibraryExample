@@ -14,6 +14,10 @@ class IconLibraryCompiler {
     constructor() {
         this.rootDir = join(__dirname, '..');
         this.paths = {
+            collection: {
+                file: 'icon.collection.json',
+                destination: 'dist',
+            },
             svg: {
                 source: 'src/icons',
                 destination: 'dist/icons',
@@ -49,6 +53,13 @@ class IconLibraryCompiler {
         }
 
         return Promise.all(items.map((item) => rm(join(directory, item), {recursive: true})));
+    }
+
+    async createIconCollection(svgData) {
+        const dist = join(this.rootDir, this.paths.collection.destination, this.paths.collection.file);
+        const map = svgData.map((data) => ({[data.key]: data.optimizedSvg}));
+
+        return await writeFile(dist, JSON.stringify(map));
     }
 
     /**
@@ -176,6 +187,7 @@ class IconLibraryCompiler {
             await this.emptyDirectory(join(this.rootDir, this.paths.svg.destination));
             await this.emptyDirectory(join(this.rootDir, this.paths.sass.destination.substring(0, this.paths.sass.destination.lastIndexOf('/'))));
             const svgData = await this.getSvgsData();
+            await this.createIconCollection(svgData);
             await this.createSvgIconFiles(svgData);
             await this.createSassStyles(svgData);
             await this.createSvgSprite(svgData);
