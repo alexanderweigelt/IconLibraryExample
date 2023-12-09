@@ -9,13 +9,17 @@ $icons-map: getIconsMap();
   @include icon($name);
 }
 
-.icon {
+.icon, icon-component {
   width: 24px; // Adjust as needed
   height: 24px; // Adjust as needed
-  fill: currentcolor; // Icons will inherit text color
   display: inline-block;
+  fill: currentcolor; // Icons will inherit text color
   stroke-width: 0;
   stroke: currentcolor;
-  background-size: contain;
-  background-repeat: no-repeat;
+}
+
+[class^='icon-'], [class*=' icon-'] {
+  background-color: currentColor;
+  mask-repeat: no-repeat;
+  mask-size: contain;
 }

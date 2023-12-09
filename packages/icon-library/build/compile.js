@@ -15,20 +15,20 @@ class IconLibraryCompiler {
         this.rootDir = join(__dirname, '..');
         this.paths = {
             collection: {
-                file: 'icon.collection.json',
-                destination: 'dist',
+                file: 'collection.generated.json',
+                destination: 'lib',
             },
             svg: {
                 source: 'src/icons',
-                destination: 'dist/icons',
+                destination: 'lib/icons',
             },
             sass: {
                 source: 'src/styles/main.scss',
-                destination: 'dist/styles/main.css',
+                destination: 'lib/styles/main.css',
             },
             sprite: {
                 file: 'icons.sprite.svg',
-                destination: 'dist/icons',
+                destination: 'lib/icons',
             }
         };
     }
@@ -42,9 +42,9 @@ class IconLibraryCompiler {
         let items = [];
 
         try {
-            await readdir(directory, (err, files) => {
+            items = await readdir(directory, (err, files) => {
+                console.log('Files:',files)
                 if (err) throw Error(err.message);
-                items = files;
             });
         } catch {
             return await mkdir(directory, {
@@ -55,9 +55,15 @@ class IconLibraryCompiler {
         return Promise.all(items.map((item) => rm(join(directory, item), {recursive: true})));
     }
 
+    /**
+     * Writes the collected icons to a json file
+     * @param svgData
+     * @returns {Promise<void>}
+     */
     async createIconCollection(svgData) {
+        let map = {};
         const dist = join(this.rootDir, this.paths.collection.destination, this.paths.collection.file);
-        const map = svgData.map((data) => ({[data.key]: data.optimizedSvg}));
+        svgData.map((data) => (map[data.key] = data.optimizedSvg));
 
         return await writeFile(dist, JSON.stringify(map));
     }
@@ -199,4 +205,4 @@ class IconLibraryCompiler {
 }
 
 const iconCompiler = new IconLibraryCompiler();
-iconCompiler.compileIcons().then(() => console.log("Successful compiled!"));
+iconCompiler.compileIcons().then(() => console.log("Successful compiled Icon library static assets!"));

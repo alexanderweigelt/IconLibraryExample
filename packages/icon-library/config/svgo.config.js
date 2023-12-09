@@ -7,7 +7,7 @@ module.exports = {
         {
             name: 'removeAttrs',
             params: {
-                attrs: ['path:(fill|stroke)', 'fill'],
+                attrs: ['path:(fill|stroke)', 'fill', 'data.*'],
             },
         },
         {
