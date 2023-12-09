@@ -7,7 +7,7 @@
 @mixin icon($name) {
   $svg-data: map.get($icons-map, $name);
   .icon-#{$name} {
-    background-image: url('data:image/svg+xml;utf8,#{$svg-data}');
+    mask-image: url('data:image/svg+xml;utf8,#{$svg-data}');
   }
 }
 

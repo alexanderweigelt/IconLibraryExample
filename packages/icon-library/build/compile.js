@@ -14,17 +14,21 @@ class IconLibraryCompiler {
     constructor() {
         this.rootDir = join(__dirname, '..');
         this.paths = {
+            collection: {
+                file: 'collection.generated.json',
+                destination: 'lib',
+            },
             svg: {
                 source: 'src/icons',
-                destination: 'dist/icons',
+                destination: 'lib/icons',
             },
             sass: {
                 source: 'src/styles/main.scss',
-                destination: 'dist/styles/main.css',
+                destination: 'lib/styles/main.css',
             },
             sprite: {
                 file: 'icons.sprite.svg',
-                destination: 'dist/icons',
+                destination: 'lib/icons',
             }
         };
     }
@@ -38,9 +42,9 @@ class IconLibraryCompiler {
         let items = [];
 
         try {
-            await readdir(directory, (err, files) => {
+            items = await readdir(directory, (err, files) => {
+                console.log('Files:',files)
                 if (err) throw Error(err.message);
-                items = files;
             });
         } catch {
             return await mkdir(directory, {
@@ -49,6 +53,19 @@ class IconLibraryCompiler {
         }
 
         return Promise.all(items.map((item) => rm(join(directory, item), {recursive: true})));
+    }
+
+    /**
+     * Writes the collected icons to a json file
+     * @param svgData
+     * @returns {Promise<void>}
+     */
+    async createIconCollection(svgData) {
+        let map = {};
+        const dist = join(this.rootDir, this.paths.collection.destination, this.paths.collection.file);
+        svgData.map((data) => (map[data.key] = data.optimizedSvg));
+
+        return await writeFile(dist, JSON.stringify(map));
     }
 
     /**
@@ -176,6 +193,7 @@ class IconLibraryCompiler {
             await this.emptyDirectory(join(this.rootDir, this.paths.svg.destination));
             await this.emptyDirectory(join(this.rootDir, this.paths.sass.destination.substring(0, this.paths.sass.destination.lastIndexOf('/'))));
             const svgData = await this.getSvgsData();
+            await this.createIconCollection(svgData);
             await this.createSvgIconFiles(svgData);
             await this.createSassStyles(svgData);
             await this.createSvgSprite(svgData);
@@ -187,4 +205,4 @@ class IconLibraryCompiler {
 }
 
 const iconCompiler = new IconLibraryCompiler();
-iconCompiler.compileIcons().then(() => console.log("Successful compiled!"));
+iconCompiler.compileIcons().then(() => console.log("Successful compiled Icon library static assets!"));

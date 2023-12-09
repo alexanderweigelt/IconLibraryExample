@@ -5,14 +5,17 @@
     "homepage": "https://alexander-weigelt.de",
     "version": "1.0.6",
     "license": "MIT",
-    "main": "dist/IconComponent.js",
-    "types": "dist/IconComponent.d.ts",
-    "style": "dist/styles/main.css",
+    "main": "lib/components/IconComponent.ts",
+    "module": "lib/components/IconComponent.js",
+    "types": "lib/components/IconComponent.d.ts",
+    "style": "lib/styles/main.css",
     "files": [
-        "dist"
+        "lib"
     ],
     "scripts": {
-        "build": "node build/compile.js && tsc -p config/tsconfig.json",
+        "build": "tsc",
+        "prebuild": "node build/compile.js",
+        "build:static": "node build/compile.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {

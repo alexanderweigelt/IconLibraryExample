@@ -1,6 +1,7 @@
 import './style.css'
-import '@alexanderweigelt/icon-library/dist/styles/main.css'
-import IconSprite from '@alexanderweigelt/icon-library/dist/icons/icons.sprite.svg'
+import '@alexanderweigelt/icon-library/lib/styles/main.css'
+import '@alexanderweigelt/icon-library/lib/IconComponent'
+import IconSprite from '@alexanderweigelt/icon-library/lib/icons/icons.sprite.svg'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <header>
@@ -21,6 +22,13 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <svg class="icon">
             <use xlink:href="#user"></use>
         </svg>
+    </div>
+    <div class="card">
+        <p>Get your icons from web component. &lt;icon-component name="home"&gt;&lt;/icon-component&gt;</p>
+        <icon-component name="home"></icon-component>
+        <icon-component name="user"></icon-component>
+        <!-- Check the fallback icon for an unassigned symbol name -->
+        <icon-component name="fallback"></icon-component>
     </div>
 </article>
 `
